@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Form</title>
+</head>
+<% if (locals.userLogged.color == 'purple') { %>
+    <body style="background-color: purple">
+<% } else { %>
+    <body>
+<% { %>
+    <form method="POST" action="/users/register">
+        <label>Ingrese su nombre</label>
+        <input type="text" name="name" id="name">
+        <% if(locals.errors && errors.name) { %>
+            <div style="color: red">
+                <%= errors.name.msg %>
+            </div>
+        <% } %>
+        <label>Color de fondo</label>
+        <select name="color" id="color">
+            <option value="">Elija un color</option>
+            <%  
+                let colors = ['blue', 'purple', 'orange', 'pink', 'green', 'yellow', 'red' ];
+            %>
+            <% for (const oneColor of colors) { %>
+            <option 
+                value="<%= oneColor %>"
+            > <%= oneColor %> </option>
+            <% } %>
+        </select>
+        <% if(locals.errors && errors.color) { %>
+            <div style="color: red">
+                <%= errors.color.msg %>
+            </div>
+        <% } %>
+        <label>Ingrese su email</label>
+        <input type="email" name="email" id="email">
+        <% if(locals.errors && errors.email) { %>
+            <div style="color: red">
+                <%= errors.email.msg %>
+            </div>
+        <% } %>
+        <label>Ingrese su edad</label>
+        <input type="text" name="age" id="age">
+        <% if(locals.errors && errors.age) { %>
+            <div style="color: red">
+                <%= errors.age.msg %>
+            </div>
+        <% } %>
+        <div>
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
+    <% if (locals.exists) { %>
+    <h1>Hola <%= locals.userLogged.name %></h1>
+    <h2>Elegiste el color: <%= locals.userLogged.color %></h2>
+    <h2>Tu email es: <%= locals.userLogged.email %></h2>
+    <h2>Tu edad es: <%= locals.userLogged.age %></h2>
+    <% } %>
+</body>
+</html>
